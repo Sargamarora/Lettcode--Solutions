@@ -1,0 +1,46 @@
+// problem: Kth Missing Positive Number
+//difficulty : easy
+// topic : binary search
+class Solution {
+    public int findKthPositiveBF1(int[] arr, int k) {
+
+        List<Integer> l = new ArrayList<>();
+    int i = 1, index = 0;
+
+    // Keep checking numbers starting from 1
+    while (l.size() < k) {
+        if (index < arr.length && arr[index] == i) {
+            index++; // skip if i is present in arr
+        } else {
+            l.add(i); // i is missing, add to list
+        }
+        i++;
+    }
+
+    return l.get(k - 1);
+    }
+
+     public int findKthPositiveBT2(int[] arr, int k){
+        int ans = 0 ;
+        for(int i : arr){
+            if(i<=k)  k++;
+            else break;
+        }
+
+        return k;
+     }
+
+      public int findKthPositive(int[] arr, int k){
+        int low = 0 ; 
+        int high = arr.length-1;
+
+        while(low<=high){
+            int mid =  (high+low)/2;
+            int missing = arr[mid]-(mid+1);
+            if(missing<k) low = mid + 1 ;
+            else high=mid-1;
+        }
+
+        return k+high+1;
+      }
+}
