@@ -1,0 +1,45 @@
+// problem : https://leetcode.com/problems/split-array-largest-sum/
+// difficulty : hard
+// topic : binary search
+
+    private int countpart(int[] nums , int maxsum){
+        int subsum=0;
+        int part=1;
+        for( int i : nums){
+            if(subsum+i<=maxsum){
+                subsum+=i;
+            }
+            else {
+                part++;
+                subsum=i;
+            }
+        }
+        return part;
+    }
+    public int splitArray(int[] nums, int k) {
+
+        int low = nums[0]; 
+        int high = 0 ;
+
+        for( int i : nums){
+            low = Math.max(low,i);
+            high+=i;
+        }
+
+        while(low<=high){
+            int mid = low + (high-low)/2;
+
+            int partition = countpart(nums,mid); 
+            if(partition>k){
+                low = mid + 1 ;
+            }
+            else {
+                high=mid-1;
+            }
+        }
+
+        return low;
+        
+    }
+
+}
