@@ -1,0 +1,20 @@
+// problem : reverse the linkedlist
+// difficulty : easy
+// topic : linkedlist
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode current;
+        ListNode prev;
+         ListNode nxt;
+        prev=null;
+        current = head;
+        while(current!=null){
+            nxt=current.next;
+            current.next=prev;
+            prev=current;
+            current=nxt;
+        }
+        return prev;
+        
+    }
+}
