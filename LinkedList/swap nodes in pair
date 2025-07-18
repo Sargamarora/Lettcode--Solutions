@@ -1,0 +1,28 @@
+// problem : swap nodes in pair
+//difficulty : medium
+//topic:linkedlist
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        if(head==null || head.next==null) return head;
+        ListNode newhead = head.next;
+        ListNode current = head;
+        ListNode prev = null;
+        while(current!=null && current.next!=null){
+            ListNode first = current ;
+            ListNode second=current.next;
+            ListNode nxtpair=second.next;
+            second.next=first;
+            first.next=nxtpair;
+            if(prev!=null){
+            prev.next=second;
+            }
+            prev=first;
+            current = nxtpair;
+
+
+        }
+        return newhead;
+        
+        
+    }
+}
