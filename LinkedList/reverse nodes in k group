@@ -1,0 +1,34 @@
+// problem : reverse nodes in k group 
+//difficulty : hard
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if (head == null || k == 1) return head;
+
+        // Check if there are at least k nodes to reverse
+        ListNode check = head;
+        for (int i = 0; i < k; i++) {
+            if (check == null) return head; // not enough nodes to reverse
+            check = check.next;
+        }
+
+        // Reverse first k nodes
+        ListNode prev = null;
+        ListNode curr = head;
+        ListNode next = null;
+        int count = 0;
+
+        while (curr != null && count < k) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+            count++;
+        }
+
+        // head now becomes tail of this reversed segment
+        // recursively reverse the remaining list and attach
+        head.next = reverseKGroup(curr, k);
+
+        return prev; // new head after reversing k nodes
+    }
+}
