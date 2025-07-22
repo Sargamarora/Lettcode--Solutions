@@ -1,0 +1,45 @@
+// problem : reverse linkedlist II
+// difficulty : medium
+class Solution {
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        if(head==null || head.next==null) return head;
+        ListNode curr = head;
+        ListNode prev = null;
+        ListNode nxt = null;
+        int count = 1 ;
+        while(count<left){
+            prev=curr;
+            curr=curr.next;
+            count++;
+        }
+        ListNode start = curr;
+      while(count<right){
+        
+        curr=curr.next;
+        count++;
+      }
+      nxt=curr.next;
+      curr.next=null;
+      ListNode newhead=revrse(start);
+      if(prev!=null){
+        prev.next=newhead;
+      }
+     start.next=nxt;
+     if(left==1) return newhead;
+     return head;        
+    }
+
+    ListNode revrse(ListNode head){
+        if(head==null || head.next==null) return head;
+        ListNode prev = null;
+        ListNode temp = head;
+       
+        while(temp!=null){
+           ListNode nxt=temp.next;
+            temp.next=prev;
+            prev=temp;
+            temp=nxt;
+        }
+        return prev;
+    }
+}
