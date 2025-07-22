@@ -1,0 +1,20 @@
+// problem : linkedlist cycle II
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+         int count = 0 ;
+        HashSet<ListNode> map = new HashSet<>();
+        ListNode curr = head;
+
+        while(curr!=null){
+            if(map.contains(curr)){
+                return curr;
+            }
+            else {
+                map.add(curr);
+                curr=curr.next;
+            }
+        }
+        return null;
+        
+    }
+}
