@@ -1,0 +1,76 @@
+// problem : design lru chache
+class Node {
+        int key ;
+        int val;
+        Node prev;
+        Node next;
+        public Node(int key , int val){
+            this.key=key;
+            this.val=val;
+        }
+    }
+    
+    class LRUCache {
+        private Node head;
+        private Node tail;
+        Map<Integer,Node> cache;
+        int capacity;
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        cache = new HashMap<>();
+        head= new Node(-1,-1);
+        tail= new Node(-1,-1);
+        head.next=tail;
+        tail.prev=head;
+    }
+    
+    public int get(int key) {
+        Node node = cache.get(key);
+        if(node == null){
+            return -1;
+        }
+        movetohead(node);
+        return node.val;
+
+    }
+    
+    public void put(int key, int value) {
+        Node node = cache.get(key);
+        if(node == null){
+            Node newnode = new Node(key,value);
+            cache.put(key,newnode);
+            addnode(newnode);
+
+            if(cache.size()>capacity){
+                Node lru = tail.prev;
+                remove(lru);
+                cache.remove(lru.key);
+            }
+        }
+        else {
+            node.val=value;
+            cache.put(key,node);
+            movetohead(node);
+        }
+        
+    }
+    private void remove(Node node){
+        Node prev = node.prev;
+        Node nxt = node.next;
+        prev.next=nxt;
+        nxt.prev=prev;
+    }
+
+    private void addnode(Node node){
+        node.next=head.next;
+        node.prev=head;
+        head.next=node;
+        node.next.prev=node;
+    }
+
+    private void movetohead(Node node){
+        remove(node);
+        addnode(node);
+    }
+}
