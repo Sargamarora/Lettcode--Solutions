@@ -1,0 +1,34 @@
+// problem : decode string
+class Solution {
+    public String decodeString(String s) {
+        Stack<Integer> count = new Stack<>();
+        Stack<StringBuilder> stringstack = new Stack<>();
+        int num = 0 ;
+        StringBuilder curr = new StringBuilder();
+        for( char single : s.toCharArray()){
+            if(Character.isDigit(single)){
+                num=num*10+(single-'0');
+            }
+            else if(single=='['){
+                count.push(num);
+                stringstack.push(curr);
+                num=0;
+                curr=new StringBuilder();
+            }
+            else if(single==']'){
+                int repeat =count.pop();
+                StringBuilder str = stringstack.pop();
+                for( int i = 1 ; i <= repeat ;i++){
+                    str.append(curr);
+                }
+                curr=str;
+            }
+            else {
+                curr.append(single);
+            }
+        }
+        return curr.toString();
+
+        
+    }
+}
