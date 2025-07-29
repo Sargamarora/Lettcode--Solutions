@@ -1,0 +1,21 @@
+// problem : valid paranthesis
+class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        for( char single : s.toCharArray()){
+            if(single=='(' || single == '[' || single == '{'){
+                stack.push(single);
+            }
+            else if(!stack.isEmpty() && compareopenclose(stack.peek(),single)){
+                stack.pop();
+            }
+            else {
+                return false;
+            }
+        }
+        return stack.isEmpty();
+    }
+    public boolean compareopenclose( char open , char close ){
+        return ((open=='('&& close==')')||(open=='['&& close==']')||(open=='{'&& close=='}'));
+    }
+}
