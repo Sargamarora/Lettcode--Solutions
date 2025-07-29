@@ -1,0 +1,36 @@
+// problem :Remove All Adjacent Duplicates In String
+class Solution {
+    public String removeDuplicatesBF(String s) {  // brute force sol
+        Stack<Character> stack = new Stack<>();
+        for(char single : s.toCharArray()){
+            if(stack.isEmpty() || stack.peek()!=single){
+                stack.push(single);
+            }
+            else {
+                stack.pop();
+            }
+        }
+        return reverse(stack);
+    }
+    public String reverse(Stack<Character> stack){
+    StringBuilder result = new StringBuilder();
+    while (!stack.isEmpty()) {
+        result.append(stack.pop());
+    }
+    return result.reverse().toString();
+}
+ public String removeDuplicates(String s){
+    StringBuilder str = new StringBuilder();
+   
+    for(char single : s.toCharArray()){
+         int len = str.length();
+        if(len>0 && str.charAt(len-1)==single){
+            str.deleteCharAt(len-1);
+        }
+        else {
+            str.append(single);
+        }
+    }
+    return str.toString();
+ }
+}
