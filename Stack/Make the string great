@@ -1,0 +1,20 @@
+// problem : make the string great
+class Solution {
+    public String makeGood(String s) {
+       Stack<Character> stack = new Stack<>();
+        for( char single : s.toCharArray()){
+            if(!stack.isEmpty() && Math.abs(stack.peek()-single )== 32){
+                  stack.pop();
+            }
+            else {
+                stack.push(single);
+            }
+        }
+        StringBuilder str = new StringBuilder();
+        for( char singlechar : stack){
+            str.append(singlechar);
+        }
+        
+        return str.toString();
+    }
+}
