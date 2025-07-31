@@ -1,0 +1,26 @@
+// problem : simplify path
+class Solution {
+    public String simplifyPath(String path) {
+        String [] paths = path.split("/");
+        Stack<String> stack = new Stack<>();
+        for( String currpath : paths){
+            if(currpath.equals(".")|| currpath.trim().length()==0){
+                continue;
+            }
+            else if(currpath.equals("..")){
+                if(!stack.isEmpty()){
+                    stack.pop();
+                }
+            }
+            else {
+                stack.push(currpath);
+            }
+        }
+        StringBuilder canonicalpath = new StringBuilder();
+        for(String cpath : stack){
+            canonicalpath.append("/");
+            canonicalpath.append(cpath);
+        }
+        return canonicalpath.length()>0?canonicalpath.toString():"/";
+    }
+}
