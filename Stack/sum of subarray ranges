@@ -1,0 +1,68 @@
+class Solution {
+    public long subArrayRanges(int[] nums) {
+        
+        return largest(nums)-smallest(nums);
+    }
+    public long largest( int [] nums){
+        
+        
+        int n = nums.length;
+        int [] nle = new int [n];
+        Stack<Integer> stack = new Stack<>();
+        for( int i = n-1 ; i>=0;i--){
+            while(!stack.isEmpty() && nums[stack.peek()]<= nums[i]){
+                stack.pop();
+            }
+            nle[i]=stack.isEmpty()?n:stack.peek();
+            stack.push(i);
+        }
+        stack.clear();
+        int ple[] = new int[n];
+        for( int j = 0 ;j< n ;j++){
+            while(!stack.isEmpty() && nums[stack.peek()]<nums[j]){
+                stack.pop();
+            }
+            ple[j]=stack.isEmpty()?-1:stack.peek();
+            stack.push(j);
+        }
+        long total = 0;
+        for( int k = 0 ; k< n ;k++){
+            long left = k-ple[k];
+            long right = nle[k]-k;
+            long contri = left*right*nums[k];
+            total = (total+contri);
+        } 
+        return total;
+    }
+
+    public long smallest( int [] nums){
+         
+        int n = nums.length;
+        int [] nse = new int [n];
+        Stack<Integer> stack = new Stack<>();
+        for( int i = n-1 ; i>=0;i--){
+            while(!stack.isEmpty() && nums[stack.peek()]>= nums[i]){
+                stack.pop();
+            }
+            nse[i]=stack.isEmpty()?n:stack.peek();
+            stack.push(i);
+        }
+        stack.clear();
+        int pse[] = new int[n];
+        for( int j = 0 ;j< n ;j++){
+            while(!stack.isEmpty() && nums[stack.peek()]>nums[j]){
+                stack.pop();
+            }
+            pse[j]=stack.isEmpty()?-1:stack.peek();
+            stack.push(j);
+        }
+        long total = 0;
+        for( int k = 0 ; k< n ;k++){
+            long left = k-pse[k];
+            long right = nse[k]-k;
+            long contri = left*right*(int)nums[k];
+            total = (total+contri);
+        } 
+        return  total;
+    }
+}
