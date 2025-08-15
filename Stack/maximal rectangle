@@ -1,0 +1,49 @@
+class Solution {
+    public int maximalRectangle(char[][] matrix) {
+        int row = matrix.length;
+        int col = matrix[0].length;
+        int [][] prefixsum = new int [row][col];
+        
+        for( int i = 0 ;i< col ; i++){
+             int sum = 0 ;
+                 for(int j = 0; j < row; j++) {
+                if (matrix[j][i] == '1') {
+                    sum += 1;
+                } else {
+                    sum = 0;
+                }
+                prefixsum[j][i]=sum;
+             }
+        }
+        int maxarea = 0 ;
+        for( int i = 0 ; i< row ;i++){
+            maxarea = Math.max(maxarea,findrectangle(prefixsum[i]));
+        }
+        return maxarea;
+    }
+    public int findrectangle(int arr[]){
+        Stack<Integer> stack = new Stack<>();
+        int pse[] = new int[arr.length];
+        for( int i = 0 ; i< arr.length ;i++){
+            while(!stack.isEmpty() && arr[stack.peek()]>arr[i]){
+                stack.pop();
+            }
+            pse[i]=stack.isEmpty()?-1:stack.peek();
+            stack.push(i);
+        }
+        stack.clear();
+        int nse[] = new int [arr.length];
+        for( int j = arr.length-1 ; j>= 0 ;j--){
+            while(!stack.isEmpty()&& arr[stack.peek()]>=arr[j]){
+                stack.pop();
+            }
+            nse[j]=stack.isEmpty()?arr.length:stack.peek();
+            stack.push(j);
+        }
+        int area = 0 ;
+        for( int k = 0 ; k< arr.length ;k++){
+            area= Math.max(area,arr[k]*(nse[k]-pse[k]-1));
+        }
+        return area;
+    }
+}
