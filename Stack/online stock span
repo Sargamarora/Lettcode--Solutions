@@ -1,0 +1,20 @@
+class StockSpanner {
+    Stack<int[]>span; // price , index
+    int index;
+
+    public StockSpanner() {
+        index = -1;
+        span = new Stack<>();
+    }
+    
+    public int next(int price) {
+    index+=1;
+    while(!span.isEmpty() && span.peek()[0]<=price){
+        span.pop();
+    }
+    int ans = index - (span.isEmpty()?-1:span.peek()[1]);
+    span.push(new int[]{price,index});
+    return ans;
+        
+    }
+}
