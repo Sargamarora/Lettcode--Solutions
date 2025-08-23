@@ -1,0 +1,39 @@
+class Solution {
+    public int[] maxSlidingWindowBF(int[] nums, int k) {
+        List<Integer> list = new ArrayList<>();
+        int n = nums.length;
+        for( int i = 0 ; i<=n-k; i++){
+            int max = nums[i];
+            for( int j = i ; j<=i+k-1 ;j++){
+                max = Math.max(max,nums[j]);
+            }
+            list.add(max);
+        } 
+        int [] result = new int[list.size()];
+        for( int m = 0 ; m< list.size() ;m++){
+            result[m]=list.get(m);
+        }
+        return result;
+    }
+      public int[] maxSlidingWindow(int[] nums, int k){
+
+        Deque<Integer> deque = new ArrayDeque<>();
+        int n = nums.length;
+        int [] result = new int[n-k+1];
+        int r = 0;
+        for( int i = 0 ; i<nums.length ;i++){
+        while(!deque.isEmpty() && deque.peek() == i-k ){
+            deque.poll();
+        }
+        while(!deque.isEmpty() && nums[deque.peekLast()]<nums[i]){
+            deque.pollLast();
+        }
+        deque.offer(i);
+        if(i>=k-1){
+            result[r++]=nums[deque.peek()];
+           }
+         }
+
+         return result;
+      }
+}
