@@ -1,0 +1,39 @@
+/* class Solution {
+    public boolean wordPattern(String pattern, String s) {
+        String [] word = s.split(" ");
+        if(pattern.length()!=word.length) return false;
+        
+        for(int i = 0 ; i < pattern.length();i++){
+            for( int j = i+1 ; j <pattern.length();j++){
+                if(pattern.charAt(i)==pattern.charAt(j)){
+                    if(!word[i].equals(word[j])) return false;
+                }
+                else if(word[i].equals(word[j])) return false;
+
+            }
+        }
+        return true;
+        
+    }
+} */
+class Solution {
+    public boolean wordPattern(String pattern, String s) {
+        String [] word = s.split(" ");
+        if(pattern.length()!=word.length) return false;
+
+        Map<Character,String> map = new HashMap<>();
+        Set<String> usewords = new HashSet<>();
+        for(int i = 0 ; i < pattern.length();i++){
+            char c = pattern.charAt(i);
+            String words = word[i];
+            if(map.containsKey(c)){
+                if(!map.get(c).equals(words)) return false;
+            }
+            else if(usewords.contains(words)) return false ;
+            map.put(c,words);
+            usewords.add(words);
+        }
+        return true;
+    }
+    
+}
