@@ -1,0 +1,45 @@
+class Solution {
+    public int longestOnesBF(int[] nums, int k) { // tc-o(n2)  sc-o(1)
+        int maxlen = 0 ;
+        
+        for( int i = 0 ; i< nums.length ;i++){
+            int count = 0;
+            for( int j = i ; j<nums.length ;j++){
+                if(nums[j]==0){
+                    count++;
+                }
+                if(count<=k){
+                    int len = j-i+1;
+                    maxlen=Math.max(maxlen,len);
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        return maxlen;
+        
+    }
+    public int longestOnes(int[] nums, int k) {
+        int maxlen = 0 ;
+        int start = 0 ;
+        int end = 0;
+        int n = nums.length;
+        int count = 0;
+        while(end<n){
+            if(nums[end]==0 ){
+                count++;
+            }
+            while(count>k){
+                if(nums[start]==0){
+                    count--;
+                }
+                    start++;
+            }
+            int len = end - start + 1;
+            maxlen = Math.max(maxlen,len);
+            end++;
+        }
+        return maxlen;
+    }
+}
